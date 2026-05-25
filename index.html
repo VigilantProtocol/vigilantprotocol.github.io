@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vigilant Protocol — Heavy Metal Truth Records</title>
+<meta name="description" content="Vigilant Protocol is a heavy metal project built on one mission: document the truth, name the mechanism, indict the system.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Rajdhani:wght@300;400;500;600;700&family=Metal+Mania&family=Rubik+Dirt&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   CSS VARIABLES
+   ============================================================ */
+:root {
+  --black: #060606;
+  --charcoal: #0e0e0e;
+  --charcoal-mid: #141414;
+  --charcoal-light: #1e1e1e;
+  --gold: #c8960c;
+  --gold-bright: #e8ad0e;
+  --gold-dim: #8a6508;
+  --gold-glow: rgba(200, 150, 12, 0.15);
+  --gold-glow-strong: rgba(200, 150, 12, 0.35);
+  --stone: #a89070;
+  --stone-dim: #6a5a48;
+  --text-primary: #e8e0d0;
+  --text-secondary: #9a8e7e;
+  --text-dim: #5a5048;
+  --border: rgba(200, 150, 12, 0.2);
+  --border-strong: rgba(200, 150, 12, 0.5);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--text-primary);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 18px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* Cracked stone texture overlay - global */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* Crack lines overlay removed */
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+h1, h2, h3 {
+  font-family: 'Cinzel Decorative', serif;
+  letter-spacing: 0.08em;
+}
+
+h2 { letter-spacing: 0.12em; }
+
+h4, h5, nav, .label {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.15em;
+}
+
+p { font-family: 'Rajdhani', sans-serif; font-weight: 400; }
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: linear-gradient(to bottom, rgba(6,6,6,0.98), rgba(6,6,6,0.85));
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  padding: 0 2rem;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-logo img {
+  height: 48px;
+  width: auto;
+  mix-blend-mode: normal;
+  filter: drop-shadow(0 0 8px rgba(200,150,12,0.4));
+  transition: filter 0.3s;
+}
+
+.nav-logo img:hover {
+  filter: drop-shadow(0 0 14px rgba(200,150,12,0.7));
+}
+
+.nav-logo span {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  color: var(--stone-dim);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: color 0.3s, text-shadow 0.3s;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.3s;
+}
+
+.nav-links a:hover { color: var(--gold); text-shadow: 0 0 12px var(--gold-glow-strong); }
+.nav-links a:hover::after { width: 100%; }
+
+/* Mobile nav toggle */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+  transition: all 0.3s;
+}
+
+/* ============================================================
+   SECTIONS BASE
+   ============================================================ */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Gold divider line */
+.divider {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 1.5rem auto;
+}
+
+.divider-left {
+  margin: 1.5rem 0;
+}
+
+/* Section label */
+.section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Section title */
+.section-title {
+  font-family: 'Metal Mania', cursive;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--gold);
+  text-shadow: 0 0 40px rgba(200,150,12,0.3), 0 0 2px rgba(0,0,0,0.8);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+#home {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 2rem 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Radial gold glow from center */
+#home::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 45%, rgba(200,150,12,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Hero horizontal line removed */
+
+.hero-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.5em;
+  color: var(--stone-dim);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  animation: fadeInDown 1s ease both;
+}
+
+.hero-subtitle {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1rem, 3vw, 1.8rem);
+  font-weight: 700;
+  color: var(--stone);
+  letter-spacing: 0.2em;
+  margin-top: 0.5rem;
+  animation: fadeInDown 1s 0.4s ease both;
+}
+
+.hero-divider {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 2.5rem auto;
+  animation: scaleIn 1s 0.6s ease both;
+}
+
+.hero-mission {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--text-secondary);
+  max-width: 600px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  animation: fadeInUp 1s 0.8s ease both;
+  font-style: italic;
+}
+
+.hero-chain {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 0;
+  margin: 3rem auto 0;
+  max-width: 700px;
+  animation: fadeInUp 1s 1s ease both;
+}
+
+.hero-chain-word {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  padding: 0 0.75rem;
+  position: relative;
+}
+
+.hero-chain-word:not(:last-child)::after {
+  content: '·';
+  position: absolute;
+  right: -3px;
+  color: var(--stone-dim);
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: fadeInUp 1s 1.5s ease both;
+}
+
+.hero-scroll span {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.4em;
+  color: var(--text-dim);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--gold-dim), transparent);
+  animation: scrollPulse 2s infinite;
+}
+
+/* ============================================================
+   THE PROTOCOL SECTION
+   ============================================================ */
+#protocol {
+  padding: 120px 0;
+  background: linear-gradient(to bottom, var(--black), var(--charcoal), var(--black));
+}
+
+.protocol-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  margin-top: 4rem;
+  align-items: start;
+}
+
+.protocol-chain {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.chain-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid rgba(200,150,12,0.08);
+  position: relative;
+  transition: all 0.3s;
+  cursor: default;
+}
+
+.chain-item:hover .chain-number { color: var(--gold); }
+.chain-item:hover .chain-word { color: var(--text-primary); letter-spacing: 0.35em; }
+.chain-item:hover { border-bottom-color: rgba(200,150,12,0.2); }
+
+.chain-number {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+  min-width: 28px;
+  transition: color 0.3s;
+}
+
+.chain-word {
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.3em;
+  color: var(--stone);
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+.chain-desc {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-style: italic;
+  line-height: 1.5;
+  transition: color 0.3s;
+}
+
+.chain-item:hover .chain-desc {
+  color: var(--text-secondary);
+}
+
+.chain-connector {
+  position: absolute;
+  left: 28px;
+  bottom: -8px;
+  width: 1px;
+  height: 16px;
+  background: linear-gradient(to bottom, var(--gold-dim), transparent);
+  opacity: 0.4;
+}
+
+/* Sovereign pillars */
+.sovereign-pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.pillar {
+  background: var(--charcoal-light);
+  border: 1px solid var(--border);
+  padding: 1.2rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.pillar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: var(--gold-dim);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.pillar:hover { border-color: var(--border-strong); background: var(--charcoal-mid); }
+.pillar:hover::before { opacity: 1; }
+
+.pillar-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.pillar-desc {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  font-style: italic;
+  display: block;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, color 0.3s;
+}
+
+.pillar:hover .pillar-desc {
+  max-height: 60px;
+  color: var(--text-secondary);
+}
+
+.protocol-statement {
+  margin-top: 4rem;
+  padding: 3rem;
+  border: 1px solid var(--border);
+  background: var(--charcoal-light);
+  position: relative;
+}
+
+.protocol-statement::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+.protocol-statement::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+.protocol-statement p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.9;
+}
+
+.protocol-statement p + p { margin-top: 1rem; }
+
+.protocol-statement strong {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ============================================================
+   MUSIC SECTION
+   ============================================================ */
+#music {
+  padding: 120px 0;
+  background: var(--black);
+}
+
+.album-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  margin-top: 4rem;
+  align-items: center;
+}
+
+.album-art-wrapper {
+  position: relative;
+}
+
+.album-art-frame {
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--charcoal-light);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: 
+    0 0 60px rgba(200,150,12,0.1),
+    0 0 120px rgba(200,150,12,0.05),
+    inset 0 0 30px rgba(0,0,0,0.5);
+}
+
+.album-art-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: 
+    linear-gradient(135deg, var(--charcoal) 0%, var(--charcoal-light) 50%, var(--charcoal) 100%);
+}
+
+.album-art-placeholder .art-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: var(--gold);
+  text-align: center;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 20px var(--gold-glow-strong);
+  line-height: 1.2;
+}
+
+.album-art-placeholder .art-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  color: var(--stone-dim);
+  letter-spacing: 0.4em;
+}
+
+.album-art-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--gold-dim);
+  border-style: solid;
+  opacity: 0.6;
+}
+
+.corner-tl { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
+.corner-tr { top: 12px; right: 12px; border-width: 1px 1px 0 0; }
+.corner-bl { bottom: 12px; left: 12px; border-width: 0 0 1px 1px; }
+.corner-br { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+
+.album-info { }
+
+.album-badge {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  color: var(--gold-dim);
+  border: 1px solid var(--gold-dim);
+  padding: 0.3rem 0.8rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+.album-title {
+  font-family: 'Metal Mania', cursive;
+  font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+  color: var(--gold);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 30px rgba(200,150,12,0.3);
+  letter-spacing: 0.04em;
+}
+
+.album-meta {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--stone-dim);
+  margin-bottom: 2rem;
+}
+
+.album-description {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.track-count {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  padding: 1.2rem 1.5rem;
+  background: var(--charcoal-light);
+  border-left: 2px solid var(--gold-dim);
+}
+
+.track-count .number {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.track-count .label-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.track-count .track-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--stone);
+}
+
+.track-count .track-sub {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 0.2rem;
+}
+
+/* Email capture */
+.notify-form {
+  margin-top: 1rem;
+}
+
+.notify-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--gold-dim);
+  display: block;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+}
+
+.notify-input-row {
+  display: flex;
+  gap: 0;
+}
+
+.notify-input {
+  flex: 1;
+  background: var(--charcoal-light);
+  border: 1px solid var(--border);
+  border-right: none;
+  color: var(--text-primary);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.95rem;
+  padding: 0.85rem 1.2rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.notify-input::placeholder { color: var(--text-dim); }
+.notify-input:focus { border-color: var(--gold-dim); }
+
+.notify-btn {
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-dim);
+  color: var(--black);
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  padding: 0.85rem 1.5rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.notify-btn:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.notify-sub {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 0.6rem;
+  font-style: italic;
+}
+
+/* Streaming placeholders */
+.streaming-section {
+  margin-top: 4rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--border);
+}
+
+.streaming-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.streaming-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.streaming-link {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+  text-decoration: none;
+  border: 1px solid rgba(200,150,12,0.1);
+  padding: 0.5rem 1.2rem;
+  transition: all 0.3s;
+  cursor: default;
+  opacity: 0.5;
+  position: relative;
+}
+
+.streaming-link::after {
+  content: 'COMING SOON';
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  color: var(--gold-dim);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.streaming-link:hover::after { opacity: 1; }
+
+/* ============================================================
+   THE BAND SECTION
+   ============================================================ */
+#band {
+  padding: 120px 0;
+  background: linear-gradient(to bottom, var(--black), var(--charcoal), var(--black));
+}
+
+.band-intro {
+  max-width: 640px;
+  margin-bottom: 5rem;
+}
+
+.band-intro p {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.band-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+}
+
+.band-card {
+  background: var(--charcoal-light);
+  padding: 3rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s;
+  cursor: default;
+}
+
+.band-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.band-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(200,150,12,0.04), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.band-card:hover { background: var(--charcoal-mid); }
+.band-card:hover::before { opacity: 1; }
+.band-card:hover::after { opacity: 1; }
+
+/* Character image placeholder */
+.char-image {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--charcoal);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.char-image-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.4;
+}
+
+.char-silhouette {
+  font-size: 3rem;
+  filter: sepia(1) saturate(0.3) brightness(0.6);
+}
+
+.char-image-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  color: var(--stone-dim);
+  text-transform: uppercase;
+}
+
+/* Corner marks on char image */
+.char-image-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--gold-dim);
+  border-style: solid;
+  opacity: 0.4;
+}
+
+.ci-tl { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
+.ci-tr { top: 8px; right: 8px; border-width: 1px 1px 0 0; }
+.ci-bl { bottom: 8px; left: 8px; border-width: 0 0 1px 1px; }
+.ci-br { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
+
+.char-role {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.char-name {
+  font-family: 'Metal Mania', cursive;
+  font-size: 1.4rem;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 20px rgba(200,150,12,0.2);
+}
+
+.char-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.char-instrument {
+  display: inline-block;
+  margin-top: 1rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  color: var(--stone-dim);
+  border-top: 1px solid var(--border);
+  padding-top: 0.8rem;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   CONTACT SECTION
+   ============================================================ */
+#contact {
+  padding: 120px 0;
+  background: var(--black);
+  text-align: center;
+}
+
+.contact-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact-statement {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin: 2rem 0 3rem;
+  line-height: 1.8;
+}
+
+.social-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.social-link {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--stone);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 0.8rem 1.8rem;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.social-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold-glow);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.social-link:hover {
+  color: var(--gold);
+  border-color: var(--border-strong);
+}
+
+.social-link:hover::before { opacity: 1; }
+
+.contact-email-note {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--charcoal);
+  border-top: 1px solid var(--border);
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+}
+
+.footer-logo {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.9rem;
+  color: var(--gold-dim);
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.footer-tagline {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.4em;
+  color: var(--text-dim);
+  margin-bottom: 1.5rem;
+}
+
+.footer-doctrine {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.footer-doctrine span {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+/* Hero logo image */
+.hero-logo-wrap {
+  animation: fadeInDown 1s 0.2s ease both;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-logo-img {
+  width: min(700px, 90vw);
+  height: auto;
+  filter: 
+    drop-shadow(0 0 40px rgba(200,150,12,0.6))
+    drop-shadow(0 0 80px rgba(200,150,12,0.3));
+}
+
+/* Footer logo */
+.footer-logo-wrap {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-logo-img {
+  height: 60px;
+  width: auto;
+  mix-blend-mode: normal;
+  filter: drop-shadow(0 0 8px rgba(200,150,12,0.3));
+  opacity: 0.9;
+}
+
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scaleX(0); }
+  to { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: fixed;
+    inset: 70px 0 0;
+    background: rgba(6,6,6,0.98);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    z-index: 999;
+  }
+
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 0.9rem; }
+  .nav-toggle { display: flex; }
+
+  .protocol-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .sovereign-pillars { grid-template-columns: 1fr 1fr; }
+  .album-showcase { grid-template-columns: 1fr; gap: 3rem; }
+  .band-grid { grid-template-columns: 1fr; }
+  .notify-input-row { flex-direction: column; }
+  .notify-btn { border: 1px solid var(--gold-dim); }
+  .notify-input { border-right: 1px solid var(--border); }
+}
+
+@media (max-width: 480px) {
+  .sovereign-pillars { grid-template-columns: 1fr; }
+  .hero-chain { gap: 0.3rem; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<nav>
+  <a href="#home" class="nav-logo">
+    <img src="VP%20Compact.png" alt="Vigilant Protocol">
+    <span>Heavy Metal Truth Records</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" onclick="closeNav()">Home</a></li>
+    <li><a href="#protocol" onclick="closeNav()">The Protocol</a></li>
+    <li><a href="#music" onclick="closeNav()">Music</a></li>
+    <li><a href="#band" onclick="closeNav()">The Band</a></li>
+    <li><a href="#contact" onclick="closeNav()">Contact</a></li>
+  </ul>
+  <div class="nav-toggle" id="navToggle" onclick="toggleNav()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section id="home">
+  <span class="hero-eyebrow">Est. 2026 · Heavy Metal · Truth Records</span>
+
+  <div class="hero-logo-wrap">
+    <img
+      src="VP%20Full.png"
+      alt="Vigilant Protocol"
+      class="hero-logo-img"
+    >
+  </div>
+  <p class="hero-subtitle">Heavy Metal Truth Records</p>
+
+  <div class="hero-divider"></div>
+
+  <p class="hero-mission">
+    Document the truth. Name the mechanism. Indict the system.
+  </p>
+
+  <div class="hero-chain">
+    <span class="hero-chain-word">Awaken</span>
+    <span class="hero-chain-word">Identify</span>
+    <span class="hero-chain-word">Expose</span>
+    <span class="hero-chain-word">Indict</span>
+    <span class="hero-chain-word">Reject</span>
+    <span class="hero-chain-word">Ignite</span>
+    <span class="hero-chain-word">Sovereign</span>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     THE PROTOCOL
+     ============================================================ -->
+<section id="protocol">
+  <div class="section-inner">
+
+    <div class="reveal">
+      <span class="section-label">The Mission</span>
+      <h2 class="section-title">The Protocol</h2>
+      <div class="divider divider-left"></div>
+    </div>
+
+    <div class="protocol-grid">
+
+      <!-- The Chain -->
+      <div class="reveal reveal-delay-1">
+        <span class="section-label" style="margin-bottom: 1.5rem; display:block;">The Journey</span>
+        <div class="protocol-chain">
+          <div class="chain-item">
+            <span class="chain-word">Awaken</span>
+            <span class="chain-desc">The signal breaks through. You see what was always there.</span>
+            <div class="chain-connector"></div>
+          </div>
+          <div class="chain-item">
+            <span class="chain-word">Identify</span>
+            <span class="chain-desc">Name the mechanism. Name the architects. Name the system.</span>
+            <div class="chain-connector"></div>
+          </div>
+          <div class="chain-item">
+            <span class="chain-word">Expose</span>
+            <span class="chain-desc">Drag it into the light. Every document. Every record. Every lie.</span>
+            <div class="chain-connector"></div>
+          </div>
+          <div class="chain-item">
+            <span class="chain-word">Indict</span>
+            <span class="chain-desc">Build the case. The evidence does not care about opinion.</span>
+            <div class="chain-connector"></div>
+          </div>
+          <div class="chain-item">
+            <span class="chain-word">Reject</span>
+            <span class="chain-desc">Withdraw consent. Stop feeding the machine that feeds on you.</span>
+            <div class="chain-connector"></div>
+          </div>
+          <div class="chain-item">
+            <span class="chain-word">Ignite</span>
+            <span class="chain-desc">Spread the signal. The truth multiplies when it finds open minds.</span>
+            <div class="chain-connector"></div>
+          </div>
+          <div class="chain-item" style="border-bottom: none;">
+            <span class="chain-word">Sovereign</span>
+            <span class="chain-desc">Own your mind. Own your ground. Answer to no master.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- The Foundation -->
+      <div class="reveal reveal-delay-2">
+        <span class="section-label" style="margin-bottom: 1.5rem; display:block;">The Foundation</span>
+        <div class="sovereign-pillars">
+          <div class="pillar">
+            <span class="pillar-name">Mental</span>
+            <span class="pillar-desc">Think for yourself. Defend your mind from every angle of manipulation.</span>
+          </div>
+          <div class="pillar">
+            <span class="pillar-name">Financial</span>
+            <span class="pillar-desc">Exit dependence. Own what you earn. The debt system is a leash.</span>
+          </div>
+          <div class="pillar">
+            <span class="pillar-name">Physical</span>
+            <span class="pillar-desc">Your body is your first line of defense. Protect it accordingly.</span>
+          </div>
+          <div class="pillar">
+            <span class="pillar-name">Information</span>
+            <span class="pillar-desc">Control your signal. Know your sources. Question everything.</span>
+          </div>
+          <div class="pillar">
+            <span class="pillar-name">Political</span>
+            <span class="pillar-desc">Understand the system well enough to stop being used by it.</span>
+          </div>
+          <div class="pillar">
+            <span class="pillar-name">Spiritual</span>
+            <span class="pillar-desc">Know who you are at the foundation. That is what they cannot touch.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Statement -->
+    <div class="protocol-statement reveal reveal-delay-2" style="margin-top: 4rem;">
+      <p>
+        Vigilant Protocol is a heavy metal project built on one mission: <strong>document the truth, name the mechanism, indict the system.</strong>
+      </p>
+      <p>
+        Every song runs between five and seven minutes. This is intentional. These are not just songs — <strong>they are cases.</strong>
+      </p>
+      <p>
+        Every record in this catalog follows a journey. Everything in this catalog is intentional. Every number. Every word. <strong>You will not be told. You will either see it or you won't. That is the protocol.</strong>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     MUSIC
+     ============================================================ -->
+<section id="music">
+  <div class="section-inner">
+
+    <div class="reveal">
+      <span class="section-label">Debut Album</span>
+      <h2 class="section-title">Music</h2>
+      <div class="divider divider-left"></div>
+    </div>
+
+    <div class="album-showcase">
+
+      <!-- Album Art -->
+      <div class="reveal reveal-delay-1">
+        <div class="album-art-wrapper">
+          <div class="album-art-frame">
+            <!-- 
+              IMPORTANT: Replace this placeholder with your actual album cover.
+              In Replit, upload Red_Pill_Symphony_Album_Cover_Final.png to your project
+              then change the div below to:
+              <img src="Red_Pill_Symphony_Album_Cover_Final.png" alt="Red Pill Symphony" style="width:100%;height:100%;object-fit:cover;">
+            -->
+            <img src="RPS%20Cover.png" alt="Red Pill Symphony — Vigilant Protocol" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Album Info -->
+      <div class="reveal reveal-delay-2">
+        <span class="album-badge">Debut Full-Length Album</span>
+        <h3 class="album-title">Red Pill Symphony</h3>
+        <p class="album-meta">Vigilant Protocol · Heavy Metal · Coming 2025</p>
+
+        <p class="album-description">
+          16 tracks. Every second intentional. These are not just songs — they are cases built from documented truth, named mechanisms, and an indictment the system cannot answer.
+        </p>
+
+        <div class="track-count">
+          <span class="number">16</span>
+          <div class="label-stack">
+            <span class="track-label">Tracks</span>
+            <span class="track-sub">5–7 minutes each · No filler · No compromise</span>
+          </div>
+        </div>
+
+        <div class="notify-form">
+          <label class="notify-label" for="notifyEmail">Be notified on release day</label>
+          <div class="notify-input-row">
+            <input 
+              type="email" 
+              id="notifyEmail" 
+              class="notify-input" 
+              placeholder="your@email.com"
+              autocomplete="email"
+            >
+            <button class="notify-btn" onclick="handleNotify()">Notify Me</button>
+          </div>
+          <p class="notify-sub">No spam. One email when the album drops. That is all.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Streaming Links (Coming Soon) -->
+    <div class="streaming-section reveal">
+      <p class="streaming-title">Available Soon On</p>
+      <div class="streaming-links">
+        <span class="streaming-link">Spotify</span>
+        <span class="streaming-link">Apple Music</span>
+        <span class="streaming-link">Amazon Music</span>
+        <span class="streaming-link">YouTube Music</span>
+        <span class="streaming-link">Tidal</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     THE BAND
+     ============================================================ -->
+<section id="band">
+  <div class="section-inner">
+
+    <div class="reveal">
+      <span class="section-label">The Members</span>
+      <h2 class="section-title">The Band</h2>
+      <div class="divider divider-left"></div>
+    </div>
+
+    <div class="band-intro reveal reveal-delay-1">
+      <p>
+        Four instruments. One mission. Ghost Zero, Valkyrie, Anvil, and Gridlock are the executors of the protocol — forged from conviction, built for the indictment.
+      </p>
+    </div>
+
+    <div class="band-grid">
+
+      <!-- Ghost Zero -->
+      <div class="band-card reveal reveal-delay-1">
+        <div class="char-image">
+          <!-- Replace with Ghost Zero character image when ready:
+               <img src="ghost_zero.jpg" alt="Ghost Zero" style="width:100%;height:100%;object-fit:cover;">
+          -->
+          <div class="char-image-inner">
+            <span class="char-silhouette">◈</span>
+            <span class="char-image-label">Image Coming</span>
+          </div>
+          <div class="char-image-corner ci-tl"></div>
+          <div class="char-image-corner ci-tr"></div>
+          <div class="char-image-corner ci-bl"></div>
+          <div class="char-image-corner ci-br"></div>
+        </div>
+        <p class="char-role">The Watcher · Primary Vocalist · Rhythm Guitar</p>
+        <h3 class="char-name">Ghost Zero</h3>
+        <p class="char-desc">
+          Parkour specialist. Intelligence operative. The one who gets to the document before they shred it. Ghost Zero moves through the system like it was designed for him — because he studied every inch of it. He reads the plans, names the architects, and delivers the indictment with cold surgical precision. No rage. No performance. Just the evidence, stated plainly, with zero mercy. He was watching before the protocol had a name. He will be watching long after.
+        </p>
+        <span class="char-instrument">Vocals · Rhythm Guitar · Piano</span>
+      </div>
+
+      <!-- Valkyrie -->
+      <div class="band-card reveal reveal-delay-2">
+        <div class="char-image">
+          <!-- Replace with Valkyrie character image when ready -->
+          <div class="char-image-inner">
+            <span class="char-silhouette">◈</span>
+            <span class="char-image-label">Image Coming</span>
+          </div>
+          <div class="char-image-corner ci-tl"></div>
+          <div class="char-image-corner ci-tr"></div>
+          <div class="char-image-corner ci-bl"></div>
+          <div class="char-image-corner ci-br"></div>
+        </div>
+        <p class="char-role">The Builder · Bassist · Secondary Vocalist</p>
+        <h3 class="char-name">Valkyrie</h3>
+        <p class="char-desc">
+          Weapons expert. Bomb squad specialist. Long-range shooter. Data analyst. And the one who grows the food, tends the soil, and knows exactly what is in it. Valkyrie is the life-giving half of the resistance — she builds what survives when everything else collapses. Kickboxer. Nutritionist. Calculated risk-taker. Loyal to the mission and to something greater than the mission. She does not perform. She testifies.
+        </p>
+        <span class="char-instrument">The Sovereignty Bass · Vocals</span>
+      </div>
+
+      <!-- Anvil -->
+      <div class="band-card reveal reveal-delay-3">
+        <div class="char-image">
+          <!-- Replace with Anvil character image when ready -->
+          <div class="char-image-inner">
+            <span class="char-silhouette">◈</span>
+            <span class="char-image-label">Image Coming</span>
+          </div>
+          <div class="char-image-corner ci-tl"></div>
+          <div class="char-image-corner ci-tr"></div>
+          <div class="char-image-corner ci-bl"></div>
+          <div class="char-image-corner ci-br"></div>
+        </div>
+        <p class="char-role">The Enforcer · Lead Guitarist</p>
+        <h3 class="char-name">Anvil</h3>
+        <p class="char-desc">
+          Ex-Navy SEAL. Ex-SWAT. Close-quarters combat specialist. Krav Maga. Jiu Jitsu. Edge weapons. When the perimeter needs to hold, Anvil holds it. When the system pushes back, Anvil is the answer. Blacksmith. Hunter. Builder. He does not just play lead guitar — he secures every inch of ground the protocol stands on. Silent. Lethal. Loyal.
+        </p>
+        <span class="char-instrument">Lead Guitar</span>
+      </div>
+
+      <!-- Gridlock -->
+      <div class="band-card reveal reveal-delay-4">
+        <div class="char-image">
+          <!-- Replace with Gridlock character image when ready -->
+          <div class="char-image-inner">
+            <span class="char-silhouette">◈</span>
+            <span class="char-image-label">Image Coming</span>
+          </div>
+          <div class="char-image-corner ci-tl"></div>
+          <div class="char-image-corner ci-tr"></div>
+          <div class="char-image-corner ci-bl"></div>
+          <div class="char-image-corner ci-br"></div>
+        </div>
+        <p class="char-role">The Foundation · Drummer</p>
+        <h3 class="char-name">Gridlock</h3>
+        <p class="char-desc">
+          Ex-Green Beret. Electronics. Networks. Robotics. Optics. Communications expert. The one who keeps the signal alive when the system tries to cut it. Outdoorsman — hunting, fishing, bushcraft — equally at home in a server room or a forest. The immovable wall at the back of every operation. Also the funniest person in the room. Gridlock is the team's anchor — and the reason morale never breaks.
+        </p>
+        <span class="char-instrument">Drums · Percussion</span>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-inner">
+
+      <div class="reveal">
+        <span class="section-label">Connect</span>
+        <h2 class="section-title">Follow The Protocol</h2>
+        <div class="divider"></div>
+      </div>
+
+      <p class="contact-statement reveal reveal-delay-1">
+        The protocol is active. Follow along on the platforms below as the catalog builds and the mission expands.
+      </p>
+
+      <div class="social-grid reveal reveal-delay-2">
+        <!-- Update these href values with real URLs when accounts are created -->
+        <a href="#" class="social-link" title="X / Twitter">X · Twitter</a>
+        <a href="#" class="social-link" title="YouTube">YouTube</a>
+        <a href="#" class="social-link" title="Instagram">Instagram</a>
+        <a href="#" class="social-link" title="Truth Social">Truth Social</a>
+        <a href="#" class="social-link" title="TikTok">TikTok</a>
+      </div>
+
+      <p class="contact-email-note reveal reveal-delay-3">
+        Business inquiries: <a href="mailto:vigilantprotocol.band@proton.me" style="color:var(--gold-dim);text-decoration:none;letter-spacing:0.05em;transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gold-dim)'">vigilantprotocol.band@proton.me</a>
+      </p>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="footer-logo-wrap">
+    <img src="VP%20Compact.png" alt="Vigilant Protocol" class="footer-logo-img">
+  </div>
+  <p class="footer-tagline">Heavy Metal Truth Records · vigilantprotocol.band</p>
+  <div class="footer-doctrine">
+    <span>Awaken</span>
+    <span>·</span>
+    <span>Identify</span>
+    <span>·</span>
+    <span>Expose</span>
+    <span>·</span>
+    <span>Indict</span>
+    <span>·</span>
+    <span>Reject</span>
+    <span>·</span>
+    <span>Ignite</span>
+    <span>·</span>
+    <span>Sovereign</span>
+  </div>
+  <div class="footer-doctrine">
+    <span>Mental</span>
+    <span>·</span>
+    <span>Financial</span>
+    <span>·</span>
+    <span>Physical</span>
+    <span>·</span>
+    <span>Information</span>
+    <span>·</span>
+    <span>Political</span>
+    <span>·</span>
+    <span>Spiritual</span>
+  </div>
+  <p class="footer-copy" style="margin-top:1.5rem;">
+    © 2026 Vigilant Protocol. All rights reserved. All lyrics copyright protected.
+  </p>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+// Mobile nav
+function toggleNav() {
+  const links = document.getElementById('navLinks');
+  links.classList.toggle('open');
+}
+
+function closeNav() {
+  document.getElementById('navLinks').classList.remove('open');
+}
+
+// Close nav on outside click
+document.addEventListener('click', function(e) {
+  const nav = document.querySelector('nav');
+  if (!nav.contains(e.target)) closeNav();
+});
+
+// Smooth active nav state
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = document.querySelectorAll('section');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 100;
+    if (window.scrollY >= sectionTop) current = section.getAttribute('id');
+  });
+
+  navLinks.forEach(link => {
+    link.style.color = '';
+    if (link.getAttribute('href') === '#' + current) {
+      link.style.color = 'var(--gold)';
+    }
+  });
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+reveals.forEach(el => revealObserver.observe(el));
+
+// Email notify handler
+function handleNotify() {
+  const input = document.getElementById('notifyEmail');
+  const email = input.value.trim();
+
+  if (!email || !email.includes('@')) {
+    input.style.borderColor = 'rgba(200,80,80,0.6)';
+    setTimeout(() => input.style.borderColor = '', 2000);
+    return;
+  }
+
+  // TODO: Connect to your email service (Mailchimp, ConvertKit, etc.)
+  // For now shows confirmation
+  const btn = document.querySelector('.notify-btn');
+  const orig = btn.textContent;
+  btn.textContent = 'Locked In';
+  btn.style.background = 'var(--gold-dim)';
+  input.value = '';
+  input.placeholder = 'You will be notified.';
+  setTimeout(() => {
+    btn.textContent = orig;
+    btn.style.background = '';
+    input.placeholder = 'your@email.com';
+  }, 4000);
+}
+
+// Enter key on email input
+document.getElementById('notifyEmail').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') handleNotify();
+});
+</script>
+
+</body>
+</html>
